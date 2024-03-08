@@ -6,5 +6,8 @@ runs:
       with:
         node-version: 20
     - run: npm ci
+      shell: bash
     - run: npm test
+      shell: bash
     - run: npm run build
+      shell: bash
