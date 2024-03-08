@@ -11,6 +11,7 @@ jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: ./.github/workflows/npm-build.yml
       - run: npm publish
         env:
