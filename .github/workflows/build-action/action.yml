@@ -2,6 +2,9 @@ name: build-action
 runs:
   using: "composite"
   steps:
-    - npm ci
-    - npm test
-    - npm run build
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 20
+    - run: npm ci
+    - run: npm test
+    - run: npm run build
