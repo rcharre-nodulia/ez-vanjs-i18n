@@ -1,0 +1,5 @@
+name: build-action
+runs:
+  - npm ci
+  - npm test
+  - npm run build
