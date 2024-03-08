@@ -3,6 +3,9 @@ name: NPM Publish
 on:
   release:
     types: [created]
+    branches:
+      - main
+
 
 jobs:
   publish-npm:
