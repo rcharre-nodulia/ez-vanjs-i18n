@@ -1,5 +1,7 @@
 name: build-action
 runs:
-  - npm ci
-  - npm test
-  - npm run build
+  using: "composite"
+  steps:
+    - npm ci
+    - npm test
+    - npm run build
