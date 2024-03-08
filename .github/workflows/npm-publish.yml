@@ -11,11 +11,6 @@ jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
       - uses: ./.github/workflows/npm-build.yml
       - run: npm publish
         env:
