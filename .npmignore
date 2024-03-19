@@ -3,4 +3,5 @@
 !LICENSE
 !package.json
 !README.md
-!dist/**
+!CHANGELOG.md
+!src/**
