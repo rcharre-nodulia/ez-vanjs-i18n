@@ -1,6 +1,6 @@
 {
   "name": "ez-vanjs-i18n",
-  "version": "0.0.2",
+  "version": "0.0.3-SNAPSHOT",
   "description": "A simple i18n library for vanjs",
   "main": "src/index.js",
   "type": "module",
