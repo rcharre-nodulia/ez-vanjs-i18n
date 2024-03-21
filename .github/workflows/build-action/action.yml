@@ -10,5 +10,3 @@ runs:
       shell: bash
     - run: npm test
       shell: bash
-    - run: npm run build
-      shell: bash
