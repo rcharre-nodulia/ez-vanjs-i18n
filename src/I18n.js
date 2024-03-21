@@ -1,26 +1,7 @@
-import van, {State} from "vanjs-core";
+import van from "vanjs-core";
 
 /**
  * A simple i18n class that uses vanjs to create a derived state that translates a key to a string using the current locale
- * @example
- * const translations = new Map([
- *    ['en', {
- *    hello: 'Hello',
- *    world: 'World',
- *    greeting: (params) => `Hello ${params.name}`
- *    }],
- *    ['fr', {
- *    hello: 'Bonjour',
- *    world: 'Monde',
- *    greeting: (params) => `Bonjour ${params.name}`
- *    }]
- *    ]);
- *
- *    const i18n = new I18n(translations, 'en');
- *    const greeting = i18n.t('greeting', {name: 'John'});
- *    const p = p(greeting);
- *    van.mount(p, document.body);
- *
  */
 export default class I18n {
     _locale;
@@ -57,27 +38,22 @@ export default class I18n {
      *
      * @private
      * @param {Object} lang - The language object
-     * @param {string} key - The key to translate
+     * @param {string[]} splitKey - Parts of the key to translate
      * @param {Object} params - The parameters to pass to the translation function
-     * @returns {string} - The translated string
+     * @returns {string | null} - The translated string
      */
-    _translate(lang, key, params = null ) {
-        const splitKey = key.split('.');
+    _translate(lang, splitKey, params = null) {
         let ns = lang;
 
         for (const part of splitKey) {
             ns = ns[part];
             if (!ns) {
-                break;
+                console.warn(`Translation key not found: ${splitKey.join('.')}`);
+                return null;
             }
         }
 
-        if (!ns) {
-            console.warn(`Translation for key ${key} not found`);
-            return key;
-        }
-
-        let result = key;
+        let result = null;
         switch (typeof ns) {
             case 'function':
                 result = ns(params);
@@ -86,7 +62,7 @@ export default class I18n {
                 result = ns;
                 break;
             default:
-                console.warn(`Unsupported translation type for key ${key}, type: ${typeof ns}`);
+                console.warn(`Unsupported translation type : ${typeof ns}`);
                 break;
         }
         return result;
@@ -98,10 +74,14 @@ export default class I18n {
      * @param {Object} params - The parameters to pass to the translation function
      * @returns {State<string>} - The state that contains the translated string
      */
-    t(key, params= null){
+    t(key, params = null) {
         return van.derive(() => {
-            const lang = this._currentTranslation.val;
-            return lang !== undefined ? this._translate(lang, key, params) : key;
-        })
+            const lang = this._currentTranslation.val
+            let result = key;
+            if (!!lang) {
+                result = this._translate(lang, key.split('.'), params) || key;
+            }
+            return result;
+        });
     }
 }
