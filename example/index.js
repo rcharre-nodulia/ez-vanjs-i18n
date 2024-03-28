@@ -1,5 +1,5 @@
 import van from "vanjs-core";
-import I18n from '../src/I18n';
+import {I18n} from '..';
 
 const {div, p, select, option} = van.tags;
 
@@ -19,7 +19,7 @@ const translations = new Map([
 const i18n = new I18n(translations, 'en');
 const App = () => div(
     select({
-            value: i18n.locale.val,
+            value: i18n.locale,
             oninput: (e) => i18n.setLocale(e.target.value)
         },
         option({

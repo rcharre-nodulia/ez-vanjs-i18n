@@ -1,4 +1,5 @@
-import van from "vanjs-core";
+import * as Van from "vanjs-core";
+const van = Van.default;
 
 /**
  * A simple i18n class that uses vanjs to create a derived state that translates a key to a string using the current locale
@@ -19,7 +20,7 @@ export default class I18n {
 
     /**
      * The current locale state
-     * @returns {State<string>} - The current locale state
+     * @returns {Van.State<string>} - The current locale state
      */
     get locale() {
         return this._locale;
@@ -72,7 +73,7 @@ export default class I18n {
      * Create a derived state that translates a key to a string using the current locale
      * @param {string} key - The key to translate
      * @param {Object} params - The parameters to pass to the translation function
-     * @returns {State<string>} - The state that contains the translated string
+     * @returns {Van.State<string>} - The state that contains the translated string
      */
     t(key, params = null) {
         return van.derive(() => {
